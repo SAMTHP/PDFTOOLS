@@ -29,35 +29,59 @@
             </div>
         </c:if>
         <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="row d-flex justify-content-center">
+                <div class="col-xs-12 col-sm-6 col-md-3 d-flex justify-content-center">
                     <button class="btn btn-info" id="btnCreatePdf" style="width: 100%">Créer un pdf</button>
                 </div>
             </div>
             <div id="createPdf">
-                <h3 class="text-center text-muted">Création d'un pdf</h3>
+                <h3 class="text-center text-white bg-dark mt-2">Création d'un pdf</h3>
                 <div class="row d-flex justify-content-center">
                     <h:form id="proposition">
                         <div class="form-group">
                             <h:inputText id="namePdf" title="Nom du pdf :" class="form-control" value="#{helloBean.pdfName}" size="20" a:placeholder="Nom du pdf">
                             </h:inputText >
                             <h:inputTextarea id="contentPdf" class="form-control" value="#{helloBean.pdfContent}" a:placeholder="Contenu du pdf">
-                            </h:inputTextarea > 
-                            <h:commandButton value="Créer pdf" action="#{helloBean.createPdf('/home/avizzeo/Documents/Code/LEARN_JAVA/PDFTools/newPdf/')}" class="btn btn-success mt-2"></h:commandButton>
+                            </h:inputTextarea >
+                            <div class="row d-flex justify-content-center">
+                                <h:commandButton value="Créer pdf" action="#{helloBean.createPdf('/home/avizzeo/Documents/Code/LEARN_JAVA/PDFTools/newPdf/')}" class="btn btn-success mt-2"></h:commandButton>
+                            </div>
                         </div>
                     </h:form>
                 </div>
-                <div class="row">
+                <div class="row d-flex justify-content-center">
                     <div class="col-xs-12 col-sm-6 col-md-3">
                         <button class="btn btn-warning" id="btnHideCreatePdf" style="width: 100%">Masquer</button>
                     </div>
                 </div>
-            <hr></hr>
             </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-3 mt-2">
-                    <h:commandButton value="Fusionner pdf" action="#{helloBean.mergePdf()}" class="btn btn-success mt-2" style="width: 100%"></h:commandButton>
+            <hr></hr>
+            <div class="row d-flex justify-content-center">
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <button class="btn btn-success" id="btnMergePdf" style="width: 100%">Fusionner pdf</button>
                 </div>
+            </div>
+            <div id="mergePdf">
+                <h3 class="text-center text-white bg-dark mt-2">Création du pdf de fusion</h3>
+                <div class="row d-flex justify-content-center">
+                    <h:form id="merge">
+                        <div class="form-group">
+                            <h:inputText id="namePdf" title="Nom du fihier pdf :" class="form-control" value="#{helloBean.pdfName}" size="20" a:placeholder="Nom du pdf">
+                            </h:inputText >
+                            <div class="row d-flex justify-content-center">
+                                <h:commandButton value="Fusionner" action="#{helloBean.mergePdf()}" class="btn btn-success mt-2"></h:commandButton>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-xs-12 col-sm-6 col-md-3 d-flex">
+                        <button class="btn btn-warning" id="btnHideMergePdf" style="width: 100%">Masquer</button>
+                    </div>
+                </div>
+            </div>
+            <hr></hr>
+            <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-3 mt-2">
                     <button class="btn btn-danger" style="width: 100%">Suppression de page</button>
                 </div>
@@ -84,13 +108,22 @@
         <script>
             $(document).ready(function(){
                 $("#createPdf").hide();
+                $("#mergePdf").hide();
                 
                 $("#btnCreatePdf").click(function(){
                     $("#createPdf").show();
                 })
                 
+                $("#btnMergePdf").click(function(){
+                    $("#mergePdf").show();
+                })
+                
                 $("#btnHideCreatePdf").click(function(){
                     $("#createPdf").hide();
+                })
+                
+                $("#btnHideMergePdf").click(function(){
+                    $("#mergePdf").hide();
                 })
             })
         </script>

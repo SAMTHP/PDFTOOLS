@@ -55,7 +55,109 @@ public class HelloBean {
     private File[] listOfFiles;
     
     private File folder;
+    
+    public static final String DEST = "/home/avizzeo/Documents/Code/LEARN_JAVA/PDFTools/newPdf/";
+    
+    /**
+     * Creates a new instance of HelloBean
+     */
+    public HelloBean() {
+//        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        this.phrase     = "PDF MANAGER";  
+        this.alert = false;
+        this.extension = ".pdf";
+        pdfFiles = new ArrayList<String>();
+        folder = new File(DEST);
+        listOfFiles = folder.listFiles();
+        
+    }
+    
+    public List<String> getPdfFiles() {
+        for (int i = 0; i < listOfFiles.length; i++) {
+            pdfFiles.add(listOfFiles[i].getName());
+        }
+        return pdfFiles;
+    }
+    
+    public String createPdf(String pathDirectory) throws IOException{
+        File file = new File(pathDirectory + this.pdfName + this.extension);
+        
+        file.getParentFile().mkdirs();
+        
+        // Initialize PDF writer
+        FileOutputStream fos = new FileOutputStream(file);
+        PdfWriter writer = new PdfWriter(fos);
+        
+        // Initialize PDF document
+        PdfDocument pdf = new PdfDocument(writer);
+        
+        // Initialize document
+        Document document = new Document(pdf);
+        
+        // Add paragraph to the document
+        document.add(new Paragraph(this.pdfContent));
+        
+        document.close();
+        
+        this.alert = true;
+        
+        this.alertMessageSuccessCreation = "PDF '" + this.pdfName + "' créé avec succès";
+        
+        return "index.xhtml";
+    }
+    
+    public static void main(String[] args) {
+        try {
+            new HelloBean().mergePdf();
+        } catch (IOException ex) {
+            Logger.getLogger(HelloBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void mergePdf() throws IOException {
+       
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+        
+        manipulatePdf(DEST + this.pdfName + this.extension);
+    }
+ 
+    protected void manipulatePdf(String dest) throws IOException {
+        getPdfFiles();
+        PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
+        
+        PdfMerger merger = new PdfMerger(pdfDoc);
+        
+        for(String pdf : this.pdfFiles){
+            PdfDocument srcDoc = new PdfDocument(new PdfReader(DEST + pdf));
+            System.out.println(pdf);
+            int numberOfPages = srcDoc.getNumberOfPages();
+            
+            merger.setCloseSourceDocuments(true)
+                .merge(srcDoc, 1, numberOfPages);
+        }
 
+        PdfOutline rootOutline = pdfDoc.getOutlines(false);
+        
+        pdfDoc.close();
+    }
+
+    public String getPhrase() {
+        return phrase;
+    }
+
+    public void setPhrase(String phrase) {
+        this.phrase = phrase;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+    
     public File getFolder() {
         return folder;
     }
@@ -116,105 +218,5 @@ public class HelloBean {
 
     public void setPdfName(String pdfName) {
         this.pdfName = pdfName;
-    }
-    
-    public static final String DEST = "/home/avizzeo/Documents/Code/LEARN_JAVA/PDFTools/newPdf/";
-    
-    /**
-     * Creates a new instance of HelloBean
-     */
-    public HelloBean() {
-//        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        this.phrase     = "PDF MANAGER";  
-        this.alert = false;
-        this.extension = ".pdf";
-        pdfFiles = new ArrayList<String>();
-        folder = new File(DEST);
-        listOfFiles = folder.listFiles();
-        
-    }
-    
-    public List<String> getPdfFiles() {
-        for (int i = 0; i < listOfFiles.length; i++) {
-            pdfFiles.add(listOfFiles[i].getName());
-        }
-        return pdfFiles;
-    }
-    
-    public String createPdf(String pathDirectory) throws IOException{
-        File file = new File(pathDirectory + this.pdfName + this.extension);
-        
-        file.getParentFile().mkdirs();
-        
-        // Initialize PDF writer
-        FileOutputStream fos = new FileOutputStream(file);
-        PdfWriter writer = new PdfWriter(fos);
-        
-        // Initialize PDF document
-        PdfDocument pdf = new PdfDocument(writer);
-        
-        // Initialize document
-        Document document = new Document(pdf);
-        
-        // Add paragraph to the document
-        document.add(new Paragraph(this.pdfContent));
-        
-        document.close();
-        
-        this.alert = true;
-        
-        this.alertMessageSuccessCreation = "PDF '" + this.pdfName + "' créé avec succès";
-        
-        return "index.xhtml";
-    }
-    public static void main(String[] args) {
-        try {
-            new HelloBean().mergePdf();
-        } catch (IOException ex) {
-            Logger.getLogger(HelloBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    public void mergePdf() throws IOException {
-       
-        File file = new File(DEST);
-        file.getParentFile().mkdirs();
-        
-        manipulatePdf(DEST+"tu.pdf");
-    }
- 
-    protected void manipulatePdf(String dest) throws IOException {
-        getPdfFiles();
-        PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
-        
-        PdfMerger merger = new PdfMerger(pdfDoc);
-        
-        for(String pdf : this.pdfFiles){
-            PdfDocument srcDoc = new PdfDocument(new PdfReader(DEST + pdf));
-            System.out.println(pdf);
-            int numberOfPages = srcDoc.getNumberOfPages();
-            
-            merger.setCloseSourceDocuments(true)
-                .merge(srcDoc, 1, numberOfPages);
-        }
-
-        PdfOutline rootOutline = pdfDoc.getOutlines(false);
-        
-        pdfDoc.close();
-    }
-
-    public String getPhrase() {
-        return phrase;
-    }
-
-    public void setPhrase(String phrase) {
-        this.phrase = phrase;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 }
