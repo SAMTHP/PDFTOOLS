@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Number guess</title>
+        <h:outputStylesheet library="style" name="guess.css" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" ></link>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <meta name="viewport" content="width=device-width, user-scalable=no"></meta>
+    </h:head>
+    <h:body>
+        <!--Navbar-->
+        <div class="shadow bg-info">
+            <h1 class="text-center text-white font-weight-bold">PDFtools</h1>
+        </div>
+        <!--/.Navbar-->
+        <c:if test="#{helloBean.alert}">
+            <div class="alert alert-success">
+                <h:outputText value="#{helloBean.alertMessageSuccessCreation}" escape="false" />
+            </div>
+        </c:if>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <button class="btn btn-info" id="btnCreatePdf" style="width: 100%">Créer un pdf</button>
+                </div>
+            </div>
+            <div id="createPdf">
+                <h3 class="text-center text-muted">Création d'un pdf</h3>
+                <div class="row d-flex justify-content-center">
+                    <h:form id="proposition">
+                        <div class="form-group">
+                            <h:inputText id="namePdf" title="Nom du pdf :" class="form-control" value="#{helloBean.pdfName}" size="20" a:placeholder="Nom du pdf">
+                            </h:inputText >
+                            <h:inputTextarea id="contentPdf" class="form-control" value="#{helloBean.pdfContent}" a:placeholder="Contenu du pdf">
+                            </h:inputTextarea > 
+                            <h:commandButton value="Créer pdf" action="#{helloBean.createPdf('/home/avizzeo/Documents/Code/LEARN_JAVA/PDFTools/newPdf/')}" class="btn btn-success mt-2"></h:commandButton>
+                        </div>
+                    </h:form>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+                        <button class="btn btn-warning" id="btnHideCreatePdf" style="width: 100%">Masquer</button>
+                    </div>
+                </div>
+            <hr></hr>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-3 mt-2">
+                    <h:commandButton value="Fusionner pdf" action="#{helloBean.mergePdf()}" class="btn btn-success mt-2" style="width: 100%"></h:commandButton>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 mt-2">
+                    <button class="btn btn-danger" style="width: 100%">Suppression de page</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 mt-2">
+                    <button class="btn btn-primary" style="width: 100%">Extraction de page PDF</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 mt-2">
+                    <button class="btn btn-warning" style="width: 100%">Trier les pages du fichier</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 mt-2">
+                    <button class="btn btn-secondary" style="width: 100%">Image en PDF</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 mt-2">
+                    <button class="btn btn-dark" style="width: 100%">Extraire image d’un PDF</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 mt-2">
+                    <button class="btn btn-outline-success" style="width: 100%">Signer PDF</button>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
+        <script>
+            $(document).ready(function(){
+                $("#createPdf").hide();
+                
+                $("#btnCreatePdf").click(function(){
+                    $("#createPdf").show();
+                })
+                
+                $("#btnHideCreatePdf").click(function(){
+                    $("#createPdf").hide();
+                })
+            })
+        </script>
+    </h:body>
+</html>
