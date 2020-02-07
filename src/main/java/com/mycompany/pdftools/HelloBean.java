@@ -40,9 +40,12 @@ public class HelloBean {
     private String phrase;
     
     private String path = "";
-    
-    // Utilisateur property
+
     private String pdfName;
+    
+    private String fusionnedPdfName;
+    
+    private boolean fusion;
     
     private String pdfContent;
     
@@ -65,6 +68,7 @@ public class HelloBean {
 //        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         this.phrase     = "PDF MANAGER";  
         this.alert = false;
+        this.fusion = false;
         this.extension = ".pdf";
         pdfFiles = new ArrayList<String>();
         folder = new File(DEST);
@@ -115,11 +119,11 @@ public class HelloBean {
     }
     
     public void mergePdf() throws IOException {
-       
         File file = new File(DEST);
         file.getParentFile().mkdirs();
-        
         manipulatePdf(DEST + this.pdfName + this.extension);
+        this.alert = true;
+        this.alertMessageSuccessCreation = "Fusion éffectuée avec succès => '" + this.pdfName + "' généré après fusion";
     }
  
     protected void manipulatePdf(String dest) throws IOException {
@@ -139,7 +143,15 @@ public class HelloBean {
 
         PdfOutline rootOutline = pdfDoc.getOutlines(false);
         
+        this.fusionnedPdfName = DEST + this.pdfName + ".pdf";
+        
+        this.fusion = true;
+        
         pdfDoc.close();
+    }
+    
+    public void extractPdf() throws IOException {
+
     }
 
     public String getPhrase() {
@@ -218,5 +230,21 @@ public class HelloBean {
 
     public void setPdfName(String pdfName) {
         this.pdfName = pdfName;
+    }
+    
+    public String getFusionnedPdfName() {
+        return fusionnedPdfName;
+    }
+
+    public void setFusionnedPdfName(String fusionnedPdfName) {
+        this.fusionnedPdfName = fusionnedPdfName;
+    }
+    
+     public boolean isFusion() {
+        return fusion;
+    }
+
+    public void setFusion(boolean fusion) {
+        this.fusion = fusion;
     }
 }
