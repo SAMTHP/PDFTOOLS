@@ -1,5 +1,2 @@
-com/mycompany/pdftools/FileNotFoun.class
-com/mycompany/pdftools/HelloBean.class
-com/mycompany/pdftools/HelloWorldBean.class
 com/mycompany/pdftools/DocumentException.class
-com/mycompany/pdftools/HelloWorld.class
+com/mycompany/pdftools/PdfBean.class

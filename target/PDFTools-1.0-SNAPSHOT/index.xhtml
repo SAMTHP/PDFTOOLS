@@ -9,7 +9,7 @@
       xmlns:pe="http://primefaces.org/ui/extensions"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Number guess</title>
+        <title>PDF TOOLS</title>
         <h:outputStylesheet library="style" name="guess.css" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" ></link>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -23,74 +23,171 @@
             <h1 class="text-center text-white font-weight-bold">PDFtools</h1>
         </div>
         <!--/.Navbar-->
-        <c:if test="#{helloBean.alert}">
+        <c:if test="#{pdfBean.alert}">
             <div class="alert alert-success">
-                <h:outputText value="#{helloBean.alertMessageSuccessCreation}" escape="false" />
+                <h:outputText value="#{pdfBean.alertMessageSuccessCreation}" escape="false" />
+            </div>
+        </c:if>
+        <c:if test="#{pdfBean.alertSup}">
+            <div class="alert alert-success">
+                <h:outputText value="#{pdfBean.alertMessageSuccessPageRemoving}" escape="false" />
+            </div>
+        </c:if>
+        <c:if test="#{pdfBean.alertConverImg}">
+            <div class="alert alert-success">
+                <h:outputText value="#{pdfBean.alertMessageSuccessConvertImg}" escape="false" />
             </div>
         </c:if>
         <div class="container">
-            <div class="row d-flex justify-content-center">
-                <div class="col-xs-12 col-sm-6 col-md-3 d-flex justify-content-center">
-                    <button class="btn btn-info" id="btnCreatePdf" style="width: 100%">Créer un pdf</button>
-                </div>
-            </div>
-            <div id="createPdf">
-                <h3 class="text-center text-white bg-dark mt-2">Création d'un pdf</h3>
-                <div class="row d-flex justify-content-center">
-                    <h:form id="proposition">
-                        <div class="form-group">
-                            <h:inputText id="namePdf" title="Nom du pdf :" class="form-control" value="#{helloBean.pdfName}" size="20" a:placeholder="Nom du pdf">
-                            </h:inputText >
-                            <h:inputTextarea id="contentPdf" class="form-control" value="#{helloBean.pdfContent}" a:placeholder="Contenu du pdf">
-                            </h:inputTextarea >
-                            <div class="row d-flex justify-content-center">
-                                <h:commandButton value="Créer pdf" action="#{helloBean.createPdf('/home/avizzeo/Documents/Code/LEARN_JAVA/PDFTools/newPdf/')}" class="btn btn-success mt-2"></h:commandButton>
-                            </div>
-                        </div>
-                    </h:form>
-                </div>
-                <div class="row d-flex justify-content-center">
-                    <div class="col-xs-12 col-sm-6 col-md-3">
-                        <button class="btn btn-warning" id="btnHideCreatePdf" style="width: 100%">Masquer</button>
-                    </div>
-                </div>
-            </div>
-            <hr></hr>
-            <div class="row d-flex justify-content-center">
-                <div class="col-xs-12 col-sm-6 col-md-3">
-                    <button class="btn btn-success" id="btnMergePdf" style="width: 100%">Fusionner pdf</button>
-                </div>
-            </div>
-            <div id="mergePdf">
-                <h3 class="text-center text-white bg-dark mt-2">Création du pdf de fusion</h3>
-                <div class="row d-flex justify-content-center">
-                    <h:form id="merge">
-                        <div class="form-group">
-                            <h:inputText id="namePdf" title="Nom du fihier pdf :" class="form-control" value="#{helloBean.pdfName}" size="20" a:placeholder="Nom du pdf">
-                            </h:inputText >
-                            <div class="row d-flex justify-content-center">
-                                <h:commandButton value="Fusionner" action="#{helloBean.mergePdf()}" class="btn btn-success mt-2"></h:commandButton>
-                            </div>
-                        </div>
-                    </h:form>
-                </div>
-                <div class="row d-flex justify-content-center">
-                    <div class="col-xs-12 col-sm-6 col-md-3 d-flex">
-                        <button class="btn btn-warning" id="btnHideMergePdf" style="width: 100%">Masquer</button>
-                    </div>
-                </div>
-            </div>
-            <c:if test="#{helloBean.fusion}">
-                <h3>PDF</h3>
-                <p:media value="#{helloBean.fusionnedPdfName}" width="100%" height="300px">
-                    Your browser can't display pdf, <h:outputLink value="#{helloBean.fusionnedPdfName}">click</h:outputLink> to download pdf instead.
-                </p:media>
-            </c:if>
-            <hr></hr>
             <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-3 mt-2">
-                    <button class="btn btn-danger" style="width: 100%">Suppression de page</button>
+                <div class="creation-pdf col-md-3">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-12 d-flex justify-content-center">
+                            <button class="btn btn-info" id="btnCreatePdf" style="width: 100%">PDF Création</button>
+                        </div>
+                    </div>
+                    <div id="createPdf">
+                        <h3 class="text-center text-white bg-dark mt-2">Création PDF</h3>
+                        <div class="row d-flex justify-content-center">
+                            <h:form id="proposition">
+                                <div class="form-group">
+                                    <h:inputText id="namePdf" title="Nom du pdf :" class="form-control" value="#{pdfBean.pdfName}" size="20" a:placeholder="Nom du pdf">
+                                    </h:inputText >
+                                    <h:inputTextarea id="contentPdf" class="form-control" value="#{pdfBean.pdfContent}" a:placeholder="Contenu du pdf">
+                                    </h:inputTextarea >
+                                    <div class="row d-flex justify-content-center">
+                                        <h:commandButton value="Créer pdf" action="#{pdfBean.createPdf('/home/avizzeo/Documents/Code/LEARN_JAVA/PDFTools/newPdf/')}" class="btn btn-success mt-2"></h:commandButton>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-12">
+                                <button class="btn btn-warning" id="btnHideCreatePdf" style="width: 100%">Masquer</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <div class="fusion-pdf col-md-3">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-12">
+                            <button class="btn btn-success" id="btnMergePdf" style="width: 100%">PDF Fusion</button>
+                        </div>
+                    </div>
+                    <div id="mergePdf">
+                        <h3 class="text-center text-white bg-dark mt-2">Fusion pdf</h3>
+                        <div class="row d-flex justify-content-center">
+                            <h:form id="merge">
+                                <div class="form-group">
+                                    <h:inputText id="namePdf" title="Nom du fihier pdf :" class="form-control" value="#{pdfBean.pdfName}" size="20" a:placeholder="Nom du pdf">
+                                    </h:inputText >
+                                    <div class="row d-flex justify-content-center">
+                                        <h:commandButton value="Fusionner" action="#{pdfBean.mergePdf()}" class="btn btn-success mt-2"></h:commandButton>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-12 d-flex">
+                                <button class="btn btn-warning" id="btnHideMergePdf" style="width: 100%">Masquer</button>
+                            </div>
+                        </div>
+                    </div>
+                    <c:if test="#{pdfBean.fusion}">
+                        <h3>PDF</h3>
+                        <p:media value="#{pdfBean.fusionnedPdfName}" width="100%" height="300px">
+                            Your browser can't display pdf, <h:outputLink value="#{pdfBean.fusionnedPdfName}">click</h:outputLink> to download pdf instead.
+                        </p:media>
+                    </c:if>
+                </div>
+
+                <div class="conversion-image-pdf col-md-3">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-12">
+                            <button class="btn btn-outline-warning" id="btnPdfToImg" style="width: 100%">PDF Conversion</button>
+                        </div>
+                    </div>
+                    <div id="pdfToImg">
+                        <h3 class="text-center text-white bg-dark mt-2">PDF Conversion</h3>
+                        <div class="row d-flex justify-content-center">
+                            <h:form id="imgPdf">
+                                <div class="form-group">
+                                    <h:inputText id="namePdf" title="Nom du fihier pdf :" class="form-control" value="#{pdfBean.pdfName}" size="20" a:placeholder="Nom du pdf à convertir">
+                                    </h:inputText >
+                                    <h:inputText id="imgName" title="Nom du nouveau fichier :" class="form-control" value="#{pdfBean.imgName}" size="20" a:placeholder="Nom du nouveau fichier">
+                                    </h:inputText >
+                                    <div class="row d-flex justify-content-center">
+                                        <h:commandButton value="Convertir" action="#{pdfBean.createImageFromPdf()}" class="btn btn-success mt-2"></h:commandButton>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-12 d-flex">
+                                <button class="btn btn-warning" id="btnHidePdfToImg" style="width: 100%">Masquer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="suppression-pdf col-md-3">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-12">
+                            <button class="btn btn-danger" id="btnDeletePage" style="width: 100%">Page Suppression</button>
+                        </div>
+                    </div>
+                    <div id="deletePage">
+                        <h3 class="text-center text-white bg-dark mt-2">PDF Suppression</h3>
+                        <div class="row d-flex justify-content-center">
+                            <h:form id="delete">
+                                <div class="form-group">
+                                    <h:inputText id="namePdf" title="Nom du fihier pdf  :" class="form-control" value="#{pdfBean.pdfName}" size="20" a:placeholder="Nom du pdf à modifier">
+                                    </h:inputText >
+                                    <h:inputText id="newNamePdf" title="Nom du nouveau fihier pdf :" class="form-control" value="#{pdfBean.newPdfName}" size="20" a:placeholder="Nom du nouveau pdf">
+                                    </h:inputText >
+                                    <h:inputText id="pagePdf" title="Numero de page  :" class="form-control" value="#{pdfBean.pages}" size="20" a:placeholder="Pages à supprimer : 1,2,...">
+                                    </h:inputText >
+                                    <div class="row d-flex justify-content-center">
+                                        <h:commandButton value="Supprimer la page" action="#{pdfBean.deletePage()}" class="btn btn-success mt-2"></h:commandButton>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-12 d-flex">
+                                <button class="btn btn-warning" id="btnHideDeletePage" style="width: 100%">Masquer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="listSection-pdf col-md-3">
+                    <div class="row d-flex justify-content-center">
+                         <div class="col-12 mt-2 d-flex justify-content-center">
+                             <button class="btn btn-secondary" id="showList" style="width: 100%">Liste des pdf</button>
+                         </div>
+                     </div>
+                     <div id="pdfListSection">
+                         <div class="row d-flex justify-content-center">
+                             <h:form id="formList">
+                                 <p:dataList value="#{pdfBean.pdfFiles}" var="pdf" type="ordered">
+                                     <f:facet name="header">
+                                         Liste des pdf enregistrés
+                                     </f:facet>
+                                     #{pdf}
+                                 </p:dataList>
+                             </h:form>
+                         </div>
+                         <div class="row d-flex justify-content-center">
+                             <div class="col-12">
+                                 <button class="btn btn-warning" id="btnHideList" style="width: 100%">Masquer</button>
+                             </div>
+                         </div>
+                     </div>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-3 mt-2">
                     <button class="btn btn-primary" style="width: 100%">Extraction de page PDF</button>
                 </div>
@@ -98,21 +195,23 @@
                     <button class="btn btn-warning" style="width: 100%">Trier les pages du fichier</button>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-3 mt-2">
-                    <button class="btn btn-secondary" style="width: 100%">Image en PDF</button>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-3 mt-2">
-                    <button class="btn btn-dark" style="width: 100%">Extraire image d’un PDF</button>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-3 mt-2">
                     <button class="btn btn-outline-success" style="width: 100%">Signer PDF</button>
                 </div>
             </div>
+            
+            
+            <hr></hr>
+            
+
         </div>
 
         <script>
             $(document).ready(function(){
                 $("#createPdf").hide();
                 $("#mergePdf").hide();
+                $("#pdfToImg").hide();
+                $("#pdfListSection").hide();
+                $("#deletePage").hide();
                 
                 $("#btnCreatePdf").click(function(){
                     $("#createPdf").show();
@@ -122,6 +221,18 @@
                     $("#mergePdf").show();
                 })
                 
+                $("#btnPdfToImg").click(function(){
+                    $("#pdfToImg").show();
+                })
+                
+                $("#showList").click(function(){
+                    $("#pdfListSection").show();
+                })
+                
+                $("#btnDeletePage").click(function(){
+                    $("#deletePage").show();
+                })
+                
                 $("#btnHideCreatePdf").click(function(){
                     $("#createPdf").hide();
                 })
@@ -129,7 +240,20 @@
                 $("#btnHideMergePdf").click(function(){
                     $("#mergePdf").hide();
                 })
+                
+                $("#btnHidePdfToImg").click(function(){
+                    $("#pdfToImg").hide();
+                })
+                
+                $("#btnHideList").click(function(){
+                    $("#pdfListSection").hide();
+                })
+                
+                $("#btnHideDeletePage").click(function(){
+                    $("#deletePage").hide();
+                })
             })
+            
         </script>
     </h:body>
 </html>
