@@ -86,7 +86,7 @@ public class PdfBean {
     private File folder;
     
     private String newPdfName;
-
+    
     private List<Integer> pagesToDelete;
     
     private String pages;

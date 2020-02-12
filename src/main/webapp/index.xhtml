@@ -12,7 +12,7 @@
         <title>PDF TOOLS</title>
         <h:outputStylesheet library="style" name="guess.css" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" ></link>
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.1.0.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
         <meta name="viewport" content="width=device-width, user-scalable=no"></meta>
@@ -39,6 +39,26 @@
             </div>
         </c:if>
         <div class="container">
+            <div class="jumbotron shadow">
+                <h1 class="display-4">Gestion des PDF</h1>
+                <p class="lead">Application développée dans le cadre d'un projet en équipe</p>
+                <hr class="my-4"/>
+                <div class="list-group shadow">
+                    <button type="button" class="list-group-item list-group-item-action active">
+                      TEAM
+                    </button>
+                    <a type="button" href="https://github.com/RomainJG" class="list-group-item list-group-item-action">Romain</a>
+                    <a type="button" href="https://github.com/aymanfattah" class="list-group-item list-group-item-action">Ayman</a>
+                    <a type="button" href="https://github.com/SAMTHP" class="list-group-item list-group-item-action">Samir</a>
+                </div>
+                <div class="row d-flex justify-content-around">
+                    <a class="btn btn-info btn-lg mt-2 shadow col-xs-12 col-md-3" href="#tools" role="button">Outils</a>
+                    <a class="btn btn-dark btn-lg mt-2 shadow col-xs-12 col-md-3" href="#toCome" role="button">A venir</a>
+                    <a class="btn btn-success btn-lg mt-2 shadow col-xs-12 col-md-3" href="https://github.com/SAMTHP/PDFTOOLS" role="button">Lien GitHub</a>
+                </div>
+                
+            </div>
+            <h1 class="text-center text-muted" id="tools">Outils</h1>
             <div class="row">
                 <div class="creation-pdf col-md-3">
                     <div class="row d-flex justify-content-center">
@@ -187,6 +207,7 @@
                 </div>
             </div>
             <hr/>
+             <h1 class="text-center text-muted" id="toCome">A venir</h1>
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-3 mt-2">
                     <button class="btn btn-primary" style="width: 100%">Extraction de page PDF</button>
@@ -198,11 +219,7 @@
                     <button class="btn btn-outline-success" style="width: 100%">Signer PDF</button>
                 </div>
             </div>
-            
-            
             <hr></hr>
-            
-
         </div>
 
         <script>
@@ -252,6 +269,29 @@
                 $("#btnHideDeletePage").click(function(){
                     $("#deletePage").hide();
                 })
+                
+                // Add smooth scrolling to all links
+                $("a").on('click', function(event) {
+
+                  // Make sure this.hash has a value before overriding default behavior
+                  if (this.hash !== "") {
+                    // Prevent default anchor click behavior
+                    event.preventDefault();
+
+                    // Store hash
+                    var hash = this.hash;
+
+                    // Using jQuery's animate() method to add smooth page scroll
+                    // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+                    $('html, body').animate({
+                      scrollTop: $(hash).offset().top
+                    }, 800, function(){
+
+                      // Add hash (#) to URL when done scrolling (default click behavior)
+                      window.location.hash = hash;
+                    });
+                  } // End if
+                });
             })
             
         </script>
